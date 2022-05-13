@@ -145,3 +145,6 @@ MEDIA_ROOT = str(BASE_DIR / "media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+SIKKA_APP_ID = env('SIKKA_APP_ID', default=None)
+SIKKA_APP_SECRET_KEY = env('SIKKA_APP_SECRET_KEY', default=None)
