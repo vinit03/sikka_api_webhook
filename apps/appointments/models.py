@@ -10,7 +10,7 @@ class Appointment(models.Model):
     amount = models.DecimalField(_('Amount'), max_digits=10, decimal_places=4)
     note = models.TextField(_('Note'), max_length=5000)
     appointment_sr_no = models.CharField(
-        _('Appointment ID'), db_index=True, max_length=25)  # Should Unique True
+        _('Appointment ID'), unique=True, db_index=True, max_length=25)
     date = models.DateTimeField(_('Date'))
     time = models.TimeField(_('Time'))
     length = models.TimeField(_('Duration'))
