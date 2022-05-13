@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     # Third Party Packages
 
     # Custom Apps
-    'apps.users'
+    'apps.users',
+    'apps.appointments',
 ]
 
 MIDDLEWARE = [
