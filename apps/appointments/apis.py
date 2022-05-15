@@ -4,7 +4,8 @@ from django.conf import settings
 from requests import request
 
 ERROR_CODES = {
-    'invalid_request_key': 'API1025'
+    'invalid_request_key': 'API1025',
+    'missing_request_key': 'API1004'
 }
 
 
@@ -18,8 +19,6 @@ class CallAPI():
     def __init__(self):
         if not self.office_id and not self.secret_key:
             self.get_authorized_practices()
-            if self.secret_key and self.office_id:
-                self.get_request_key()
 
     def call_api(self, method, url, base_headers={}, data={}, loop=False):
         response = request(method, self.base_url+url,
@@ -32,7 +31,7 @@ class CallAPI():
                 return error_code
         return response
 
-    def get_authorized_practices(self):
+    def get_authorized_practices(self, office_id=None):
         method = 'GET'
         url = '/authorized_practices'
         headers = {
@@ -44,10 +43,19 @@ class CallAPI():
                                  base_headers=headers, data=payload)
         if response and response.status_code == 200:
             response = response.json()
-            practice = response.get('items', [None])[0]
+            practices = response.get('items', [None])
+            practice = practices[0]
+
+            if office_id:
+                practice = next(
+                    filter(lambda practice: practice['office_id'] == office_id, practices), practice)
+
             if practice:
                 self.secret_key = practice.get('secret_key')
                 self.office_id = practice.get('office_id')
+
+                if self.secret_key and self.office_id:
+                    self.get_request_key()
         return response
 
     def delete_request_key(self):
@@ -92,4 +100,7 @@ class CallAPI():
                                  base_headers=headers, data=payload)
         if response == ERROR_CODES.get('invalid_request_key') and not loop:
             return self.get_appointments(loop=True)
-        return response
+        return response.json()
+
+
+apis = CallAPI()

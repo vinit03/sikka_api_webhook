@@ -148,3 +148,4 @@ AUTH_USER_MODEL = 'users.User'
 
 SIKKA_APP_ID = env('SIKKA_APP_ID', default=None)
 SIKKA_APP_SECRET_KEY = env('SIKKA_APP_SECRET_KEY', default=None)
+SIKKA_CALLBACK_KEY = env('SIKKA_CALLBACK_KEY', default='')

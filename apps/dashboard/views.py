@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from apps.appointments.apis import CallAPI
-
-apis = CallAPI()
+from apps.appointments.apis import apis
 
 # Create your views here.
 

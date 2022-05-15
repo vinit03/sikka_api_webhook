@@ -13,7 +13,7 @@ class Appointment(models.Model):
         _('Appointment ID'), unique=True, db_index=True, max_length=25)
     date = models.DateTimeField(_('Date'))
     time = models.TimeField(_('Time'))
-    length = models.TimeField(_('Duration'))
+    length = models.DurationField(_('Duration'))
     description = models.TextField(_('Description'), max_length=5000)
     appointment_made_date = models.DateTimeField('Appoinment Made On')
     type = models.CharField(_('Type'), max_length=50)
