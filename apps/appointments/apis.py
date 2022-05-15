@@ -26,8 +26,9 @@ class CallAPI():
             **base_headers
         }
         proxies = None
-        response = request(method, self.base_url+url,
-                           proxies=proxies, headers=headers, data=data)
+        u = self.base_url + url
+        response = request(method, u, proxies=proxies,
+                           headers=headers, data=data)
         if response.status_code == 400 and not loop:
             res_json = response.json()
             error_code = res_json.get('error_code')
