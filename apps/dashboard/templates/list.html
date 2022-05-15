@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="text-center mt-5">
+    Welcome To Sikka Webhook example
+</h3>
+<section class='container my-5'>
+    <form action="{% url 'dashboard:appointment-list' %}" method="GET">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" value="{{ applied_filters.q|default:'' }}"
+                placeholder=" Search Patient" aria-label="Search Patient" name='q' aria-describedby="search-button">
+            <button class="btn btn-outline-secondary" type="submit" id="search-button">Search</button>
+        </div>
+    </form>
+</section>
+<section class="container">
+    {% if appointments %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Patient ID</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <th scope="row">{{ forloop.counter0|add:page_obj.start_index }}</th>
+                    <td>{{ appointment.patient_name }}</td>
+                    <td>{{ appointment.patient_id }}</td>
+                    <td>{{ appointment.date|date:"M d" }} at {{ appointment.time }}</td>
+                    <td class="text-end">{{ appointment.amount|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'pagination.html' %}
+    {% else %}
+    <h4 class="text-center">No Data Available</h4>
+    {% endif %}
+
+</section>
+{% endblock content %}
