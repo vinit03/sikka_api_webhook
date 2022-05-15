@@ -21,8 +21,13 @@ class CallAPI():
             self.get_authorized_practices()
 
     def call_api(self, method, url, base_headers={}, data={}, loop=False):
+        headers = {
+            "User-Agent": "Opera/9.80 (X11; Linux x86_64; U; de) Presto/2.2.15 Version/10.00",
+            **base_headers
+        }
+        proxies = None
         response = request(method, self.base_url+url,
-                           headers=base_headers, data=data)
+                           proxies=proxies, headers=headers, data=data)
         if response.status_code == 400 and not loop:
             res_json = response.json()
             error_code = res_json.get('error_code')
